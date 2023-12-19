@@ -1,0 +1,111 @@
+{% extends "base.html"%}
+{% block content %}
+{% load static %}
+
+
+
+
+
+<section id="request" dir="rtl">
+    <div class="container ">
+        <div class="row panel panel-default text-center">
+            <div class="panel-heading">
+                <div class="row">
+                    <h1>الرد على طلب رقم ( {{list.REQUEST_NO}} )</h1>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tbody>
+
+                        <tr>
+                            <th>رقم الطلب : </th>
+                            <td>{{list.REQUEST_NO}}</td>
+                        </tr>
+                        <tr>
+                            <th>نوع الطلب:</th>
+                            <td>{{list.REQUEST_TYPE_NAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>تاريخ انشاء الطلب :</th>
+                            <td>{{list.REQUEST_START_DATE|date:'Y/m/d '}}</td>
+                        </tr>
+                        <tr>
+                            <td style="color: red;text-align: center;" colspan="2">
+                                لعرض مزيد من تفاصيل الطلب برجاء الذهاب الى <a href="/{{list.request_id}}"
+                                    class="btn btn-outline-primary"> <i class="fa fa-info-circle"></i> تفاصيل </a>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="2" style="color: green;font-size:20px;text-align: center;">
+                                الرد على الطلب
+                            </td>
+                        </tr>
+
+
+                        <!-- response form -->
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <tr>
+                                <th>موقف الرد : </th>
+                                <td>
+                                    <div class="col-md-12">
+                                        <select class="form-control" name="decision" >
+                                            <option value="">--- اختر الرد ---</option>
+                                            <option value="1"> موافق </option>
+                                            <option value="2"> موافق (توصيات) </option>
+                                            <option value="3"> غير موافق - حظر -
+                                                رفض - عدم موافق </option>
+                                            <option value="4"> إستكمال البيانات</option>
+                                            <option value="5"> تسوية موقف قانوني </option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>تحميل ملف</th>
+                                <td>
+                                    <div class="col-md-12">
+                                        <input type="file" name="file1" >
+
+                                    </div>
+                            </tr>
+                            <tr>
+                                <th>ملاحظــــــات</th>
+                                <td>
+                                    <div class="col-md-12">
+                                        <textarea name="comment" class="form-control" id="comment"
+                                            cols="30" rows="10"
+                                            placeholder="برجاء إضافة الملاحظات الخاصة بالطلب"></textarea>
+                                    </div>
+                            </tr>
+                            <tr style="text-align: left;">
+
+                                <td colspan="2"> <button class="btn btn-success " type="submit">  حـــفــــظ <i class="fa fa-check-circle"></i></button>
+                                    <a href="/" class="btn btn-danger " style="margin-right: 5px;" > عودة <i
+                                            class="fa fa-undo"></i> </a>
+
+
+                            </tr>
+                        </form>
+              
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+{% endblock %}

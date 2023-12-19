@@ -1,0 +1,62 @@
+{% load static %}
+<!-- CSS only -->
+<link rel="icon" href="{% static 'images/all-trans-dark.png' %}" type="image/png">
+<title>تطبيق هيئة التنمية الصناعية</title>
+<!-- bootstratp -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<!-- fontawsem -->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<!-- custom css -->
+<link rel="stylesheet" href="{% static 'css/ida.css' %}">
+
+
+{% if user.is_authenticated %}
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand text" href="/accounts/logout/">تسجيل الخروج</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class='text2'><a href="#"> <span style="color: green;">مرحبا | </span> {{request.user.first_name}}
+                        {{request.user.last_name}}</a></li>
+                <li> <img src="{% static 'images/all-trans-dark.png' %}" alt="" width="50" height="50"></li>
+                <li> <img src="{% static 'images/download.png' %}" alt="" width="50" height="50"></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+{% block content %}
+{% endblock %}
+
+
+
+
+
+{% else %}
+
+<script>
+    window.location.href = 'accounts/login/' // Your login page URL
+</script>
+
+{% endif %}

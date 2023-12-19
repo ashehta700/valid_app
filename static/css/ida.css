@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "PT Bold Heading";
+    src: url("PTBoldHeading.eot");
+    src: url("PTBoldHeading.eot?#iefix") format("embedded-opentype"),
+      url("PTBoldHeading.woff2") format("woff2"),
+      url("PTBoldHeading.woff") format("woff"),
+      url("PTBoldHeading.ttf") format("truetype"),
+      url("PTBoldHeading.svg#PTBoldHeading") format("svg");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+  /* arabic */
+  @font-face {
+    font-family: "Almarai";
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/almarai/v5/tssoApxBaigK_hnnS_qjtnqWow.woff2)
+      format("woff2");
+    unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
+      U+FB50-FDFF, U+FE80-FEFC, U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
+      U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+      U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+body{
+    background: #ffff;
+    font-family: "Almarai", sans-serif;
+}
+.margin{
+    margin-top: 12px;
+    color: #fbfbfb;
+}
+.heading{
+    background-color: beige;
+
+}
+.mr-5{
+    margin-right: 2%;
+}
+.form_style{
+    margin-top:1% ;
+    direction: rtl;
+}
+.floats{
+    margin-top: 1%;
+    float: left;
+}
+#request .panel {
+    margin-top: 1% ;
+    
+}
+.panel{
+box-shadow: 0 0px 28px rgb(0 0 0);
+}
+.shehta{
+    background-color: red;
+}
+.marginTop{
+    margin-top: 19px;
+}
+.link h5 a {
+    color: #fbfbfb !important;
+}
+.text{
+    color: #f16522  !important;
+}
+.text2{
+    font-size: 17px;
+    color: black !important;
+}
+.table-bordered>thead>tr>th{
+    text-align: center;
+    background-color: #ddd;
+    
+}
+.table-bordered>thead>tr>th{
+    border: 1px solid black;
+}

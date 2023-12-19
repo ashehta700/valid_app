@@ -1,0 +1,181 @@
+{% extends "base.html"%}
+{% block content %}
+{% load static %}
+
+
+
+
+
+<section id="request" dir="rtl">
+    <div class="container ">
+        <div class="row panel panel-default text-center">
+            <div class="panel-heading">
+                <div class="row">
+                    <h1>تفاصيل طلب رقم ( {{list.REQUEST_NO}} )</h1>
+                </div>
+            </div>
+            <div class="panel-body">
+                
+                <table class="table table-bordered">
+                    <tbody>
+
+                        <tr>
+                            <th>رقم الطلب : </th>
+                            <td>{{list.REQUEST_NO}}</td>
+                        </tr>
+                        <tr>
+                            <th>نوع الطلب:</th>
+                            <td>{{list.REQUEST_TYPE_NAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>تاريخ انشاء الطلب :</th>
+                            <td>{{list.REQUEST_START_DATE|date:'Y/m/d '}}</td>
+                        </tr>
+                        <tr>
+                            <th>رقم المنشأة :</th>
+                            <td>{{list.FACILITY_NUMBER}}</td>
+                        </tr>
+                        <tr>
+                            <th>إسم المنشأة : </th>
+                            <td>{{list.FACILITY_NAME}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>المحافظة :</th>
+                            <td>{{list.GOVERNORATE_NAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>المدينة :</th>
+                            <td>{{list.CITY_NAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>إسم المنطقة الصناعية :</th>
+                            <td>{{list.INDUSTRIAL_ZONE_NAME}}</td>
+                        </tr>
+                        <tr>
+                            <th>اسم السمة التجارية:</th>
+                            <td>{{list.COMMN_NAME}}</td>
+                        </tr>
+                        <tr>
+                        <th>النوع مسبق او إخطار : </th>
+                        <td>
+                        {% for i in request_activity_sel %}
+                        {{i.NOTIFICATION_TYPE }} , 
+                        {% endfor%}
+                    </td>
+                    </tr>
+                        <tr>
+                            <th>العنوان تفصيلاً:</th>
+                            <td>{{list.DETAILED_ADDRESS }}</td>
+                        </tr>
+                        <tr>
+                            <th>إسم المستثمر</th>
+                            <td>{{list.INVESTOR_NAME }}</td>
+                        </tr>
+                        <tr>
+                            <th>إسم المالك</th>
+                            <td>{{list.OWNER_NAME }}</td>
+                        </tr>
+                        <tr>
+                            <th>اسم مقدم الطلب</th>
+                            <td>{{list.REQUESTER_NAME }}</td>
+                        </tr>
+                        <tr>
+                            <th>رقم مقدم الطلب</th>
+                            <td>{{list.REQUESTER_PHONE }}</td>
+                        </tr>
+                        <tr>
+
+                            <th>تطبيق النشاط </th>
+                            <td>{{list.CATEGORY_TYPE }}</td>
+
+                        </tr>
+                        <tr>
+                            <th>إسم النشاط </th>
+                            <td>
+                            {% for i in request_activity_sel %}
+                            {{i.ACTIVITY_TITLE }} , 
+                            {% endfor%}
+                        </td>
+
+                        </tr>
+                        <tr>
+                            <th>رقم تليفون المالك </th>
+                            <td>{{list.CEO_PHONE }}</td>
+                        </tr>
+                        <tr>
+                            <th style="color: red;">الجهات المختصة بالطلب</th>
+                            <td>
+                                {% for each in external_entity %}
+                                {{each.external_entity_name}} |
+                                {% endfor %}
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <th colspan="2"
+                                style="text-align: center;font-size:30px;color: green;text-decoration: underline;">
+                                الملفات الخاصة بالطلب</th>
+                        </tr>
+                        {% for each in attachement_sel %}
+                        <tr>
+                            <th>{{each.attachment_type.display_name}}</th>
+                            <td><a href="{% url 'download_file' each.attachment_file_path|cut:'sharedIntegrationDocument/'|slice:'' %}"
+                                    download> تحميل الملف </a></td>
+
+                        </tr>
+                        {% endfor %}
+                        {% for item in response_external_entites_sel  %}
+                        {% if  item.comments and request.user.id|add:0 == item.created_by|add:0 %}
+                        <tr>
+                            <th colspan="2"
+                                style="text-align: center;font-size:30px;color: green;text-decoration: underline;">
+                                موقف الرد
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>رد الجهه</th>
+                            <td>{{ item.decision.decision_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>ملاحظات رد الجهه</th>
+                            <td>{{ item.comments }}</td>
+                        </tr>
+                        <tr>
+                            <th>تاريخ رد الجهه</th>
+                            <td>{{ item.creation_date|date:'Y/m/d' }}</td>
+                        </tr>
+                        <tr>
+                            <th>تحميل الملف</th>
+                            {% for i in response_attachments %}
+                            {% if request.user.id|add:0 == i.created_by|add:0 %}
+                            <td><a href="{% url 'download_file' i.attachment_file_path|cut:'sharedIntegrationDocument/'|slice:'' %}"
+                                download> تحميل الملف </a></td>
+                            {% endif %}
+                            {% endfor %}
+                           
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+
+
+                    </tbody>
+                </table>
+                <a href="/" class="btn btn-primary pull-left" style="margin-right: 5px;"><i class="fa fa-undo"></i>
+                    عودة</a>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+{% endblock %}

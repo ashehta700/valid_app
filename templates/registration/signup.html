@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>تسجيل الدخول</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>تسجيل الدخول</h2>
+        <div class="row">
+            <table class="table table-bordered">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_table }}
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="Register" class="btn btn-primary">
+                        </td>
+                    </tr>
+                </form>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+{% extends "base.html"%}
+{% block content %}
+{% load static %}
+<!-- developerd by Ahmed Shehta  -->
+
+<section id="request" dir="rtl" class="container-fluid">
+    <div class="container-fluid ">
+        <div class="row panel panel-default ">
+            <div class="panel-heading" style="height: 32%;;background-image:none !important">
+                <div class="row">
+
+                    <h3 class="text-right mr-5 col-12"><i class="fa fa-search"></i> قائمة البحث </h3>
+                </div>
+                <form method="GET" name="search" action="{% url 'index' %}" class="form_style">
+                    <div class="row">
+
+                        <div class="form-group col-md-4">
+                            <label for="faclilty_number">رقم المنشأة:</label>
+                            <input type="text" class="form-control" name="faclilty_number">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="monsh2a_name">إسم المنشأة :</label>
+                            <input type="text" class="form-control" name="monsh2a_name">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="request_num">رقم الطلب:</label>
+                            <input type="text" class="form-control" id="request_num" name="request_num">
+                        </div>
+                        <div class="col-md-8 ">
+                        </div>
+
+
+                    </div>
+                    <div class="form-group floats">
+                        <button class="btn btn-success " type="submit"> بحث
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <a href="/" class="btn btn-danger">إلغاء<i class="fa fa-times"></i></a>
+                    </div>
+                </form>
+                <p class="btn btn-primary marginTop">
+                    إجمالى الطلبات المستلمة <span class="badge badge-green"> {{count_req}} </span>
+                </p>
+                <p class="btn btn-success marginTop">
+                    إجمالى الطلبات التى تم الرد عليها <span class="badge badge-green"> {{num_products.count}} </span>
+                </p>
+                <p class="btn btn-danger marginTop">
+                    إجمالى الطلبات التى لم يتم الرد عليها <span class="badge badge-green"> {{count_sub}} </span>
+                </p>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">رقم الطلب  </th>
+                            <th scope="col">تاريخ إنشاء الطلب</th>
+                            <th scope="col">إسم مقدم الطلب</th>
+                            <th scope="col">رقم الهاتف</th>
+                            <th scope="col">المحافظة</th>
+                            <th scope="col">نوع الطلب</th>
+                            <th scope="col"><i class="fa fa-cogs setting"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% if request.user.id == 9 %}
+                        {% for each in data %}
+                        <tr>
+                            <td>{{each.REQUEST_NO}}</td>
+                            <td>{{each.REQUEST_START_DATE|date:'Y/m/d'}}</td>
+                            <td>{{each.REQUESTER_NAME}}</td>
+                            <td>{{each.REQUESTER_PHONE}}</td>
+                            <td>{{each.GOVERNORATE_NAME}}</td>
+                            <td>{{each.REQUEST_TYPE_NAME}}</td>
+                            <td> <a href="{{each.OPERATIONAL_REQUEST_ID}}" class="btn btn-primary"> تفاصيل <i
+                                        class="fa fa-info-circle"></i></a>
+                                        {% if each.request_id not in request_ids %}
+                                        |
+                                <a href="{% url 'replay' each.OPERATIONAL_REQUEST_ID %}" class="btn btn-success">رد <i class="fa fa-info-circle"></i></a>
+                              {% endif %}
+                        </tr>
+                        {%empty%}
+                        <tr>
+                            <td colspan="8">
+                                <div class="alert alert-danger" role="alert">
+                                    لا يوجد طلبــــــات
+                                </div>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        {% else %}
+                        <!-- showing all MergeRequests for admin user -->
+                        {% for each in data %}
+                        <tr>
+                            <td>{{each.REQUEST_NO}}</td>
+                            <td>{{each.REQUEST_START_DATE|date:'Y/m/d'}}</td>
+                            <td>{{each.REQUESTER_NAME}}</td>
+                            <td>{{each.REQUESTER_PHONE}}</td>
+                            <td>{{each.GOVERNORATE_NAME}}</td>
+                            <td>{{each.REQUEST_TYPE_NAME}}</td>
+                            <td> <a href="{{each.request_id}}" class="btn btn-primary"> تفاصيل <i
+                                        class="fa fa-info-circle"></i></a>
+                                        {% if each.request_id not in request_ids %}
+                                        |
+                                <a href="{% url 'replay' each.request_id %}" class="btn btn-success">رد <i class="fa fa-info-circle"></i></a>
+                              {% endif %}
+                        </tr>
+                        {%empty%}
+                        <tr>
+                            <td colspan="8">
+                                <div class="alert alert-danger" role="alert">
+                                    لا يوجد طلبــــــات
+                                </div>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        {% endif %}
+                    </tbody>
+                </table>
+                <!--Pagination-->
+                <div class="container p-4 text-center">
+                    <div class="pagination justify-content-center" style="direction: rtl;">
+                        {% if data.has_previous %}
+                        <li><a href="?page={{ data.previous_page_number }}"> السابق &raquo;</a></li>
+                        {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                        {% for i in data.paginator.page_range %}
+                        {% if data.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if data.has_next %}
+                        <li><a href="?page={{ data.next_page_number }}">&laquo; التالى</a></li>
+                        {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+                        <p title='as"d"sad'></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock content %}
