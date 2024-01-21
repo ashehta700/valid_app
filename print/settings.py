@@ -93,17 +93,17 @@ DATABASES = {
             'ENGINE': 'django.db.backends.oracle',
             'NAME': 'DEV',
             'USER': 'MSA',
-            'PASSWORD': 'MSA',
-            'HOST': '192.168.160.123',
-            'PORT': '1521',
+            'PASSWORD': '###',
+            'HOST': '##.##.##.##',
+            'PORT': '####',
     },
     # 'sdi': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'newPortal',
     #     'USER' : 'postgres',
-    #     'PASSWORD' : 'postgres',
-    #     'HOST' : '10.100.100.71',
-    #     'PORT' : '5432'
+    #     'PASSWORD' : '#####',
+    #     'HOST' : '##.##.##.##',
+    #     'PORT' :  '####'
     # }
 }
 
